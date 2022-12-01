@@ -1,34 +1,52 @@
 <template>
+
+  <div class="black-bg" v-if="(modal==true)">
+    <div class="white-bg">
+      <img :src="products[productNumber].image" class="modal-img">
+      <h4>{{products[productNumber].title}}</h4>
+      <p>{{products[productNumber].content}}</p>
+      <p>{{products[productNumber].price}} 원</p><br/>
+      <p @click="(modal=false)" class="close-btn">닫기</p>
+    </div>
+  </div>
+
   <div class="menu">
     <a v-for="menu in menus" :key="menu">{{menu}}</a>
   </div>
 
-  <div v-for="(product,index) in products" :key="index" class = 'card'>
-    <h4>{{product.product}}</h4>
-    <p>{{product.price}}만원</p>
-    <button v-on:click="increase(index)" class="red-btn">허위매물신고</button> <span>신고수 : {{reportNum[index]}}</span>
+  <Discount></Discount>
+
+  <div v-for="(product,index) in products" :key="index" class='card'>
+    <img :src="product.image" class="room-img" @click="modal=true; productNumber = product.id">
+    <h4 @click="(modal=true)">{{product.title}}</h4>
+    <p @click="(modal=true)">{{product.price}}원</p>
+    <!-- <button v-on:click="increase(index)" class="red-btn">허위매물신고</button> <span>신고수 : {{reportNum[index]}}</span> -->
   </div>
 
 </template>
 
 <script>
-
+import productsData from './assets/data.js';
+import Discount from './Discount.vue';
 
 export default {
   name: 'App',
   data() {
-    return {
+    return {  // data 보관함 ( 데이터 다 떄려 박기 ) vue 실시간 자동 렌더링을 위해 데이터 바인딩이 필요
       menus : ['Home','Products','About'],
-      products : [{product : '역삼동원룸', price: 60, id : 0}, {product : '천호동원룸', price : 40, id : 1}, {product : '마포구원룸', price : 70, id :2}],
-      reportNum : [0,0,0]
+      products : productsData,
+      productNumber : 0,
+      reportNum : [0,0,0],
+      modal : false
     }
-  },  // data 보관함 ( 데이터 다 떄려 박기 ) vue 실시간 자동 렌더링을 위해 데이터 바인딩이 필요
-  methods: {
+  }, 
+  methods: { // 함수 보관함
     increase(index) {
       this.reportNum[index]++
     }
   },
   components: {
+    Discount : Discount
   }
 }
 </script>
@@ -42,6 +60,35 @@ export default {
   color: #2c3e50;
 }
 
+body {
+  margin : 0;
+}
+div {
+  box-sizing: border-box;
+}
+.black-bg {
+  width: 100%; 
+  height:100%;
+  background: rgba(0,0,0,0.5);
+  position: fixed; 
+  padding-top: 70px;
+  padding-left: auto;
+  padding-right: auto;
+}
+.white-bg {
+  width: 700px;
+  height : 550px;
+  background: white;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.modal-img {
+  width: 600px;
+}
+
 .menu {
   background: darkorchid;
   padding:15px;
@@ -51,6 +98,7 @@ export default {
 .menu a{
   color : white;
   padding : 10px;
+  cursor: pointer;
 }
 
 .red-btn {
@@ -59,6 +107,27 @@ export default {
   border-radius: 5px;
   border : 0px;
   height : 40px;
-  width : 130px
+  width : 130px;
+  cursor: pointer;
 }
+
+.room-img {
+  margin-top : 40px;
+  width : 40%;
+  cursor: pointer;
+}
+
+.close-btn {
+  background-color: #2c3e50;
+  width : 30%;
+  margin-left: auto;
+  margin-right: auto;
+  height : 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 5px;
+  color:white;
+  cursor: pointer;
+}
+
 </style>
