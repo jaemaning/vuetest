@@ -1,14 +1,6 @@
 <template>
 
-  <div class="black-bg" v-if="(modal==true)">
-    <div class="white-bg">
-      <img :src="products[productNumber].image" class="modal-img">
-      <h4>{{products[productNumber].title}}</h4>
-      <p>{{products[productNumber].content}}</p>
-      <p>{{products[productNumber].price}} 원</p><br/>
-      <p @click="(modal=false)" class="close-btn">닫기</p>
-    </div>
-  </div>
+  <Modal :products="products" :modal="modal" :productNumber="productNumber" /> <!--props 전송 v-bind -->
 
   <div class="menu">
     <a v-for="menu in menus" :key="menu">{{menu}}</a>
@@ -16,18 +8,15 @@
 
   <Discount></Discount>
 
-  <div v-for="(product,index) in products" :key="index" class='card'>
-    <img :src="product.image" class="room-img" @click="modal=true; productNumber = product.id">
-    <h4 @click="(modal=true)">{{product.title}}</h4>
-    <p @click="(modal=true)">{{product.price}}원</p>
-    <!-- <button v-on:click="increase(index)" class="red-btn">허위매물신고</button> <span>신고수 : {{reportNum[index]}}</span> -->
-  </div>
+  <Card v-for="(product,index) in products" :key="index" :product="product" :productNumber="productNumber" :modal="modal" />
 
 </template>
 
 <script>
 import productsData from './assets/data.js';
 import Discount from './Discount.vue';
+import Modal from './Modal.vue';
+import Card from './Card.vue';
 
 export default {
   name: 'App',
@@ -45,8 +34,10 @@ export default {
       this.reportNum[index]++
     }
   },
-  components: {
-    Discount : Discount
+  components: { // components 보관함
+    Discount : Discount,
+    Modal : Modal,
+    Card:Card
   }
 }
 </script>
