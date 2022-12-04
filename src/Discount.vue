@@ -18,6 +18,6 @@ export default {
   color : darkslategrey;
   padding : 10px;
   border-radius: 5px;
-  margin: 10px;
+  margin: 1rem;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 
-  <Modal :products="products" :modal="modal" :productNumber="productNumber" /> <!--props 전송 v-bind -->
+  <Modal :products="products" :modal="modal" :productNumber="productNumber" @closeModal="(modal=false)"/> <!--props 전송 v-bind -->
 
   <div class="menu">
     <a v-for="menu in menus" :key="menu">{{menu}}</a>
@@ -8,7 +8,7 @@
 
   <Discount></Discount>
 
-  <Card v-for="(product,index) in products" :key="index" :product="product" :productNumber="productNumber" :modal="modal" />
+  <Card @openModal="(modal=true, productNumber = $event)" v-for="(product,index) in products" :key="index" :product="product" :productNumber="productNumber" :modal="modal" />
 
 </template>
 
@@ -83,7 +83,6 @@ div {
 .menu {
   background: darkorchid;
   padding:15px;
-  border-radius: 5px;
 }
 
 .menu a{
@@ -105,6 +104,9 @@ div {
 .room-img {
   margin-top : 40px;
   width : 40%;
+}
+
+.cursor-point{
   cursor: pointer;
 }
 
@@ -119,6 +121,12 @@ div {
   border-radius: 5px;
   color:white;
   cursor: pointer;
+}
+.card {
+  border: 1rem solid;
+  border-color: white;
+  background-color: whitesmoke;
+  border-radius: 5px;
 }
 
 </style>
