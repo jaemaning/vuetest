@@ -13,7 +13,6 @@ export default {
     name : 'Card',
     props : {
         product : Object,
-        productNumber : Number,
         modal : Boolean
     }
 }

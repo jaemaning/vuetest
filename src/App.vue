@@ -10,14 +10,14 @@
   </div>
 
 
-  <Discount></Discount>
+  <Discount v-if="showDiscount" />
 
   <button @click="titleSort" class="tap-button">ABC 🔽</button>
   <button @click="priceSortDown" class="tap-button"> 가격 🔽 </button>
   <button @click="priceSortUp" class="tap-button"> 가격 🔼 </button>
   <button @click="sortBack" class="tap-button"> 되돌리기 </button>
 
-  <Card @openModal="(modal=true, productNumber = $event)" v-for="(product,index) in products" :key="index" :product="product" :productNumber="productNumber" :modal="modal" />
+  <Card @openModal="(modal=true, productNumber = $event)" v-for="(product,index) in products" :key="index" :product="product" :modal="modal" />
 
 
 </template>
@@ -37,7 +37,8 @@ export default {
       productsOriginal : [...productsData],
       productNumber : 0,
       reportNum : [0,0,0],
-      modal : false
+      modal : false,
+      showDiscount : true
     }
   }, 
   methods: { // 함수 보관함
@@ -76,6 +77,11 @@ export default {
       })
       this.products = array3
     }
+  },
+  mounted(){ // life cycle hook 중에 mounted : 마운트 될때 실행
+    setTimeout(()=>{ // this를 사용할떈 arrow(=>) function을 사용용
+      this.showDiscount = false;
+    },2000);
   },
   components: { // components 보관함
     Discount : Discount,
@@ -190,6 +196,7 @@ div {
   border: solid 3px #2c3e50 ;
   border-radius: 5px;
   cursor: pointer;
+  margin-top : 10px;
 }
 
 /* 퇴장 animation 은 enter => leave로 변경 */

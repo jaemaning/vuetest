@@ -20,7 +20,7 @@ export default {
     name : 'Modal',
     data() {
         return{
-            month:1,
+            month:1
         }
     },
     // watcher 로 데이터 인풋값을 감시 할 수 있음. => 데이터가 변할떄마다 함수 실행
